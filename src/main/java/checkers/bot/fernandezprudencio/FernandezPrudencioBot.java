@@ -8,19 +8,70 @@ import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class FernandezPrudencioBot implements CheckersPlayer{
+public class FernandezPrudencioBot implements CheckersPlayer {
     @Override
     public CheckersMove play(CheckersBoard board) {
-        List<CheckersMove> children = successors(board);
-        CheckersMove bestAction = searchBestAction(children,board);
-        //CheckersMove.builder().fromPosition(i,j).toPosition(i+2, j+2).build()
 
-        return null;
+        try {
+            return checkingAllMoves(board);
+        } catch (BadMoveException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("Something went wrong");
+    }
+    public CheckersMove checkingAllMoves(CheckersBoard board) throws BadMoveException {
+        NodeBoard initialBoard = new NodeBoard(board);
+        LinkedList<NodeBoard> q= new LinkedList<>();
+        q.add(initialBoard);
+        do {
+            NodeBoard n = q.removeFirst();
+
+            //n.printBoard();
+            LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(successors(n));
+            //DFS
+            //q.addAll(0,s);
+            //BFS
+            q.addAll(s);
+            if(q.isEmpty()){
+                return n.getMoveDone();
+            }
+        } while (!q.isEmpty() && q.getFirst().depth < 6);
+        //if(!q.isEmpty()){
+        NodeBoard bestNodeBoard =q.removeFirst();
+        int highestUtility = Integer.MIN_VALUE;
+        for (NodeBoard possibleSelected: q ) {
+            if(possibleSelected.accumulatedUtility>highestUtility){
+                bestNodeBoard = possibleSelected;
+                highestUtility = possibleSelected.accumulatedUtility;
+            }
+        }
+        return bestNodeBoard.getMoveDone();
+       //}
+        //throw new IllegalArgumentException("No moves left, you already won/lost");
     }
 
+    public List<NodeBoard> successors (NodeBoard nodeBoard) throws BadMoveException {
+        List<CheckersMove> possiblePlays = nodeBoard.board.possibleCaptures();
+        if(possiblePlays.isEmpty())
+            possiblePlays = nodeBoard.board.possibleMoves();
+        List<NodeBoard> possibleFutureBoards = new LinkedList<>();
+        for (CheckersMove possiblePlay: possiblePlays) {
+            NodeBoard possibleStateofBoard = new NodeBoard(nodeBoard,possiblePlay);
+            possibleFutureBoards.add(possibleStateofBoard);
+        }
+        return possibleFutureBoards;
+    }
+
+}
+
+
+/*
     private CheckersMove searchBestAction(List<CheckersMove> children, CheckersBoard board) throws BadMoveException {
         CheckersMove min = searchMin(children,board);
         CheckersMove max = searchMax(children,board);
@@ -34,36 +85,11 @@ public class FernandezPrudencioBot implements CheckersPlayer{
            boards.add(board.clone());
            boards.get(boards.size()-1).processMove(move);
         }
-        for(int i=0; i<boards.size();i++ ) {
-            boards.get(i).
-            possibleMax.put();
-
-
-        }
         return null;
     }
+*/
 
-    private CheckersBoard clone (CheckersBoard board) {
-        CheckersBoard newboard = new CheckersBoard();
-        //private char[][] board;
-        //private CheckersBoard.Player currentPlayer;
-
-        return newboard;
-    }
-
-
-    private CheckersMove searchMax(List<CheckersMove> children, CheckersBoard board) {
-
-
-
-        return null;
-    }
-
-    private CheckersMove searchMin(List<CheckersMove> children, CheckersBoard board) {
-        return null;
-    }
-
-
+/*
     private List<CheckersMove> successors (CheckersBoard board) {
 
         List<CheckersBoard> boards = new ArrayList<>();
@@ -76,8 +102,19 @@ public class FernandezPrudencioBot implements CheckersPlayer{
         else
             return possibleCaptures;
     }
+*/
 
-}
+/*
+    private CheckersMove searchMax(List<CheckersMove> children, CheckersBoard board) {
+        return null;
+    }
+
+    private CheckersMove searchMin(List<CheckersMove> children, CheckersBoard board) {
+        return null;
+    }
+*/
+
+
 
 /*
         List<CheckersMove> possibleCaptures = board.possibleCaptures();

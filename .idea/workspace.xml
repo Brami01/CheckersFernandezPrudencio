@@ -23,7 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c580b58-956c-4074-b63a-6255f7eb168e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/NodeBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/FernandezPrudencioBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/FernandezPrudencioBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/checkers/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/checkers/AppTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +51,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -62,7 +73,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../tictactoe-master" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -78,15 +93,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -111,8 +124,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
         <item itemvalue="JUnit.AppTest" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -127,7 +140,8 @@
       <workItem from="1598657513201" duration="357000" />
       <workItem from="1598657892369" duration="102000" />
       <workItem from="1598658216209" duration="1283000" />
-      <workItem from="1598659559709" duration="5460000" />
+      <workItem from="1598659559709" duration="5538000" />
+      <workItem from="1598743669959" duration="11694000" />
     </task>
     <servers />
   </component>
@@ -151,35 +165,54 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598659379437" />
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1598744104717">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598744104717" />
+    <state x="743" y="389" width="433" height="268" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1598747091750">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="743" y="389" width="433" height="268" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598747091750" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1598661894468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598661894468" />
-    <state width="1877" height="393" key="GridCell.Tab.0.bottom" timestamp="1598663852841">
+    <state width="1877" height="523" key="GridCell.Tab.0.bottom" timestamp="1598755343262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="393" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598663852841" />
-    <state width="1877" height="393" key="GridCell.Tab.0.center" timestamp="1598663852840">
+    <state width="1877" height="523" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598755343262" />
+    <state width="1877" height="523" key="GridCell.Tab.0.center" timestamp="1598755343262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="393" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598663852840" />
-    <state width="1877" height="393" key="GridCell.Tab.0.left" timestamp="1598663852840">
+    <state width="1877" height="523" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598755343262" />
+    <state width="1877" height="523" key="GridCell.Tab.0.left" timestamp="1598755343262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="393" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598663852840" />
-    <state width="1877" height="393" key="GridCell.Tab.0.right" timestamp="1598663852841">
+    <state width="1877" height="523" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598755343262" />
+    <state width="1877" height="523" key="GridCell.Tab.0.right" timestamp="1598755343262">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="393" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598663852841" />
+    <state width="1877" height="523" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598755343262" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1598747098805">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598747098805" />
+    <state x="308" y="202" width="1673" height="1027" key="dock-window-1" timestamp="1598747244058">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="308" y="202" width="1673" height="1027" key="dock-window-1/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598747244058" />
+    <state x="347" y="113" width="1019" height="846" key="dock-window-2" timestamp="1598751784700">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="347" y="113" width="1019" height="846" key="dock-window-2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598751784700" />
+    <state x="690" y="281" key="extract.method.dialog" timestamp="1598750338530">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="281" key="extract.method.dialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598750338530" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/checkers/AppTest.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/checkers/CheckersBoard.java</url>
           <line>252</line>
