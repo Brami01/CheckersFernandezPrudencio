@@ -4,10 +4,12 @@
 package checkers;
 
 import checkers.bot.fernandezprudencio.*;
+import checkers.bot.gray.GrayRandomBot;
 import checkers.exception.BadMoveException;
 import org.junit.Test;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -64,7 +66,7 @@ public class AppTest {
 		}
 	}
 	@Test
-	public void whatIsTheInitialPlayer() throws BadMoveException {
+	public void whatIsTheInitialPlayerOops() throws BadMoveException {
 		FernandezPrudencioBot player3 = new FernandezPrudencioBot();
 		CheckersBoard initBoard = CheckersBoard.initBoard();
 		NodeBoard rootBoard = new NodeBoard(initBoard);
@@ -83,7 +85,8 @@ public class AppTest {
 		LinkedList<NodeBoard> s6 = new LinkedList<NodeBoard>(player3.successors(s5.removeFirst()));
 		//s6.forEach(ss -> System.out.println("Initial player: "+ss.initialPlayer));
 		}
-	@Test
+
+		@Test
 	public void moveDoneinCheckingAllMoves() throws BadMoveException {
 		FernandezPrudencioBot player3 = new FernandezPrudencioBot();
 		CheckersBoard initBoard = CheckersBoard.initBoard();

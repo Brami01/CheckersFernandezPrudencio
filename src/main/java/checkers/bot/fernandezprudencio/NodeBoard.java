@@ -25,13 +25,15 @@ public class NodeBoard {
         this.parent = null;
     }
 
-    private CheckersBoard.Player getInitialPlayer(CheckersBoard board) {
-        return board.otherPlayer() == CheckersBoard.Player.BLACK ? CheckersBoard.Player.RED : CheckersBoard.Player.BLACK;
+    public static CheckersBoard.Player getInitialPlayer(CheckersBoard board) {
+        return board.otherPlayer() == CheckersBoard.Player.BLACK
+                ? CheckersBoard.Player.RED
+                : CheckersBoard.Player.BLACK;
     }
 
     //Creates possible Future Moves
     public NodeBoard(NodeBoard parent, CheckersMove move) throws BadMoveException {
-        this.depth = parent.depth+1;
+        this.depth = parent.depth + 1;
         this.accumulatedUtility = parent.accumulatedUtility;
         this.initialPlayer = parent.initialPlayer;
         this.moveDone = move;
@@ -46,7 +48,12 @@ public class NodeBoard {
             addCaptureUtility(board,move);
         }
         addCoronationUtility(board,move);
+        //addWinningUtilyty(board,move);
         return newBoard;
+    }
+
+    private void addWinningUtilyty(CheckersBoard board, CheckersMove move) {
+
     }
     private void addCoronationUtility (CheckersBoard board, CheckersMove move) {
         if(move.getEndRow()==7 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.RED_PLAIN) {
@@ -64,19 +71,51 @@ public class NodeBoard {
     }
     private void addCaptureUtility (CheckersBoard board, CheckersMove move){
         if (getInitialPlayer(board) == CheckersBoard.Player.BLACK) {
-            if(getPiece(board, move) == CheckersBoard.RED_CROWNED)
+            switch (getMiddlePiece(board,move)){
+                case CheckersBoard.RED_CROWNED:
+                    accumulatedUtility += 4;
+                    break;
+                case CheckersBoard.RED_PLAIN:
+                    accumulatedUtility += 3;
+                    break;
+                case CheckersBoard.BLACK_CROWNED:
+                    accumulatedUtility -= 4;
+                    break;
+                case CheckersBoard.BLACK_PLAIN:
+                    accumulatedUtility -= 3;
+                    break;
+            }
+            /*
+            if(getMiddlePiece(board, move) == CheckersBoard.RED_CROWNED)
                 accumulatedUtility += 4;
             else
                 accumulatedUtility += 3;
+            */
         } else {
-            if(getPiece(board, move) == CheckersBoard.BLACK_CROWNED)
+            switch (getMiddlePiece(board,move)){
+                case CheckersBoard.RED_CROWNED:
+                    accumulatedUtility -= 4;
+                    break;
+                case CheckersBoard.RED_PLAIN:
+                    accumulatedUtility -= 3;
+                    break;
+                case CheckersBoard.BLACK_CROWNED:
+                    accumulatedUtility += 4;
+                    break;
+                case CheckersBoard.BLACK_PLAIN:
+                    accumulatedUtility += 3;
+                    break;
+            }
+            /*
+            if(getMiddlePiece(board, move) == CheckersBoard.BLACK_CROWNED)
                 accumulatedUtility -= 4;
             else
                 accumulatedUtility -= 3;
+            */
         }
     }
 
-    private char getPiece(CheckersBoard board, CheckersMove move){
+    private char getMiddlePiece(CheckersBoard board, CheckersMove move){
         return board.getBoard()[move.getMiddlePosition().getRow()][move.getMiddlePosition().getCol()];
     }
 

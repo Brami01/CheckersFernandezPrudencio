@@ -17,7 +17,6 @@ import java.util.stream.Stream;
 public class FernandezPrudencioBot implements CheckersPlayer {
     @Override
     public CheckersMove play(CheckersBoard board) {
-
         try {
             return checkingAllMoves(board);
         } catch (BadMoveException e) {
@@ -45,10 +44,18 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         //if(!q.isEmpty()){
         NodeBoard bestNodeBoard =q.removeFirst();
         int highestUtility = Integer.MIN_VALUE;
+        int lowestUtility = Integer.MAX_VALUE;
         for (NodeBoard possibleSelected: q ) {
-            if(possibleSelected.accumulatedUtility>highestUtility){
-                bestNodeBoard = possibleSelected;
-                highestUtility = possibleSelected.accumulatedUtility;
+            if (board.otherPlayer() == CheckersBoard.Player.RED) {
+                if(possibleSelected.accumulatedUtility>highestUtility){
+                    bestNodeBoard = possibleSelected;
+                    highestUtility = possibleSelected.accumulatedUtility;
+                }
+            } else {
+                if(possibleSelected.accumulatedUtility<lowestUtility){
+                    bestNodeBoard = possibleSelected;
+                    lowestUtility = possibleSelected.accumulatedUtility;
+                }
             }
         }
         return bestNodeBoard.getMoveDone();
@@ -64,6 +71,8 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         for (CheckersMove possiblePlay: possiblePlays) {
             NodeBoard possibleStateofBoard = new NodeBoard(nodeBoard,possiblePlay);
             possibleFutureBoards.add(possibleStateofBoard);
+
+        for (NodeBoard n: possibleFutureBoards) {
         }
         return possibleFutureBoards;
     }
