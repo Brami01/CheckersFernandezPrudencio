@@ -4,12 +4,9 @@ import checkers.CheckersBoard;
 import checkers.CheckersMove;
 import checkers.CheckersPlayer;
 import checkers.exception.BadMoveException;
-import jdk.jshell.spi.ExecutionControl;
 
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.LinkedList;
+import java.util.List;
 
 public class FernandezPrudencioBot implements CheckersPlayer {
     @Override
@@ -23,39 +20,28 @@ public class FernandezPrudencioBot implements CheckersPlayer {
     }
     public CheckersMove checkingAllMoves(CheckersBoard board) throws BadMoveException {
         NodeBoard initialBoard = new NodeBoard(board);
-        LinkedList<NodeBoard> q= new LinkedList<>();
+        LinkedList<NodeBoard> q = new LinkedList<>();
         q.add(initialBoard);
         do {
             NodeBoard n = q.removeFirst();
-
-            //n.printBoard();
             LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(successors(n));
             s = ordenar(s);
             if (!s.isEmpty()) {
                 if (s.getFirst().initialPlayer == s.getFirst().board.otherPlayer()) { //enemy
-                    for (int i = 0; i<(Math.floor(s.size()*0.6)); i++) {
-                        //System.out.println(s.getFirst().board.otherPlayer());
+                    for (int i = 0; i<(Math.floor(s.size()*0.5)); i++) {
                         s.removeLast();
                     }
-                } /*else {
-                    for (int i = 0; i<(Math.floor(s.size()*0.6)); i++) {
-                        s.removeFirst();
-                    }
-                }*/
+                }
             }
-            //DFS
-            //q.addAll(0,s);
             //BFS
             q.addAll(s);
             if(q.isEmpty()){
                 return n.getMoveDone();
             }
 
-        } while (!q.isEmpty() && q.getFirst().depth < 8);
-        //if(!q.isEmpty()){
+        } while (!q.isEmpty() && q.getFirst().depth < 6);
         NodeBoard bestNodeBoard =q.removeFirst();
         int highestUtility = bestNodeBoard.accumulatedUtility;
-        int lowestUtility = bestNodeBoard.accumulatedUtility;
         for (NodeBoard possibleSelected: q ) {
             if(possibleSelected.accumulatedUtility>highestUtility){
                 bestNodeBoard = possibleSelected;
@@ -63,8 +49,6 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             }
         }
         return bestNodeBoard.getMoveDone();
-       //}
-        //throw new IllegalArgumentException("No moves left, you already won/lost");
     }
 
     public List<NodeBoard> successors (NodeBoard nodeBoard) throws BadMoveException {
@@ -82,12 +66,10 @@ public class FernandezPrudencioBot implements CheckersPlayer {
     public LinkedList<NodeBoard> ordenar(LinkedList<NodeBoard> nodeBoards) {
         LinkedList<NodeBoard> n = new LinkedList<>();
         while (!nodeBoards.isEmpty()) {
-            NodeBoard m = nodeBoards.getFirst();
             int i = Integer.MAX_VALUE;
             int j = -1;
             for (NodeBoard a: nodeBoards) {
                 if (a.accumulatedUtility < i) {
-                    m = a;
                     i = a.accumulatedUtility;
                 }
                 j++;
@@ -96,7 +78,6 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         }
         return n;
     }
-
 }
 
 

@@ -4,10 +4,6 @@ import checkers.CheckersBoard;
 import checkers.CheckersMove;
 import checkers.exception.BadMoveException;
 
-/**
- * For each estimated
- * **/
-
 public class NodeBoard {
     public CheckersBoard board;
     public CheckersMove moveDone;
@@ -18,17 +14,11 @@ public class NodeBoard {
     //Creates root NodeBoard
     public NodeBoard(CheckersBoard board) {
         this.board = board;
-        this.initialPlayer = getInitialPlayer(board);
+        this.initialPlayer = board.getCurrentPlayer();
         this.depth = 0;
         this.accumulatedUtility = 0;
         this.moveDone = null;
         this.parent = null;
-    }
-
-    public static CheckersBoard.Player getInitialPlayer(CheckersBoard board) {
-        return board.otherPlayer() == CheckersBoard.Player.BLACK
-                ? CheckersBoard.Player.RED
-                : CheckersBoard.Player.BLACK;
     }
 
     //Creates possible Future Moves
@@ -48,13 +38,9 @@ public class NodeBoard {
             addCaptureUtility(board,move);
         }
         addCoronationUtility(board,move);
-        //addWinningUtilyty(board,move);
         return newBoard;
     }
 
-    private void addWinningUtilyty(CheckersBoard board, CheckersMove move) {
-
-    }
     private void addCoronationUtility (CheckersBoard board, CheckersMove move) {
         if(move.getEndRow()==7 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.RED_PLAIN) {
             if (initialPlayer == CheckersBoard.Player.RED)
@@ -67,7 +53,6 @@ public class NodeBoard {
                 accumulatedUtility += 2;
             else
                 accumulatedUtility -= 2;
-
         }
     }
 
@@ -87,12 +72,6 @@ public class NodeBoard {
                     accumulatedUtility -= 3;
                     break;
             }
-            /*
-            if(getMiddlePiece(board, move) == CheckersBoard.RED_CROWNED)
-                accumulatedUtility += 4;
-            else
-                accumulatedUtility += 3;
-            */
         } else {
             switch (getMiddlePiece(board,move)){
                 case CheckersBoard.RED_CROWNED:
@@ -108,12 +87,6 @@ public class NodeBoard {
                     accumulatedUtility += 3;
                     break;
             }
-            /*
-            if(getMiddlePiece(board, move) == CheckersBoard.BLACK_CROWNED)
-                accumulatedUtility -= 4;
-            else
-                accumulatedUtility -= 3;
-            */
         }
     }
 
@@ -132,13 +105,3 @@ public class NodeBoard {
         return parent.getMoveDone();
     }
 }
-
-        /*
-        if(board.otherPlayer()== CheckersBoard.Player.BLACK){
-            board.countPiecesOfPlayer(CheckersBoard.Player.BLACK);
-            newBoard.countPiecesOfPlayer(CheckersBoard.Player.RED);
-        } else {
-            board.countPiecesOfPlayer(CheckersBoard.Player.RED);
-            newBoard.countPiecesOfPlayer(CheckersBoard.Player.BLACK);
-        }
-        */
