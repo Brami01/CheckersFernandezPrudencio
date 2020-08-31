@@ -8,12 +8,29 @@ import checkers.bot.gray.GrayRandomBot;
 import checkers.exception.BadMoveException;
 import org.junit.Test;
 
+<<<<<<< HEAD
 import java.util.LinkedList;
 import java.util.Optional;
+=======
+import java.util.stream.Stream;
+>>>>>>> 5bdd2832564b0d1b7dad56a3c5d8b31f847b7e8c
 
 import static org.junit.Assert.*;
 
 public class AppTest {
+	@Test
+	public void cloneTest() {
+		CheckersBoard initBoard = CheckersBoard.initBoard();
+		CheckersBoard clone = initBoard.clone();
+		assertEquals(initBoard, clone);
+			try {
+				clone.processMove(clone.possibleMoves().get(0));
+			} catch (BadMoveException e) {
+				fail(e.getMessage());
+			}
+		assertNotEquals(initBoard, clone);
+	}
+
 	@Test
 	public void countPiecesTest() {
 		CheckersBoard initBoard = CheckersBoard.initBoard();
@@ -104,6 +121,7 @@ public class AppTest {
 	}
 
 	@Test
+<<<<<<< HEAD
 	public void moveDoneinCheckingAllMoves() throws BadMoveException {
 		FernandezPrudencioBot player3 = new FernandezPrudencioBot();
 		CheckersBoard initBoard = CheckersBoard.initBoard();
@@ -113,6 +131,66 @@ public class AppTest {
 		LinkedList<NodeBoard> s3 = new LinkedList<NodeBoard>(player3.successors(s2.removeFirst()));
 
 		//System.out.println(s3.getFirst().getMoveDone().getEndCol() +" "+s3.getFirst().getMoveDone().getEndRow());
+=======
+	public void gameTest() {
+		CheckersBoard board = CheckersBoard.initBoard();
+		Stream.of(//
+				CheckersMove.builder().fromPosition(5,6).toPosition(4,5).build(),//
+				CheckersMove.builder().fromPosition(2,3).toPosition(3,4).build(),//
+				CheckersMove.builder().fromPosition(4,5).toPosition(2,3).build(),//
+				CheckersMove.builder().fromPosition(1,4).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(6,7).toPosition(5,6).build(),//
+				CheckersMove.builder().fromPosition(2,7).toPosition(3,6).build(),//
+				CheckersMove.builder().fromPosition(5,2).toPosition(4,1).build(),//
+				CheckersMove.builder().fromPosition(0,3).toPosition(1,4).build(),//
+				CheckersMove.builder().fromPosition(4,1).toPosition(2,3).build(),//
+				CheckersMove.builder().fromPosition(1,4).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(7,6).toPosition(6,7).build(),//
+				CheckersMove.builder().fromPosition(3,2).toPosition(4,1).build(),//
+				CheckersMove.builder().fromPosition(5,0).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(2,1).toPosition(4,3).build(),//
+				CheckersMove.builder().fromPosition(5,4).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(1,2).toPosition(2,1).build(),//
+				CheckersMove.builder().fromPosition(6,1).toPosition(5,0).build(),//
+				CheckersMove.builder().fromPosition(2,1).toPosition(4,3).build(),//
+				CheckersMove.builder().fromPosition(6,3).toPosition(5,4).build(),//
+				CheckersMove.builder().fromPosition(1,0).toPosition(2,1).build(),//
+				CheckersMove.builder().fromPosition(5,4).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(3,2).toPosition(1,0).build(),//
+				CheckersMove.builder().fromPosition(0,1).toPosition(1,2).build(),//
+				CheckersMove.builder().fromPosition(6,5).toPosition(5,4).build(),//
+				CheckersMove.builder().fromPosition(3,6).toPosition(4,7).build(),//
+				CheckersMove.builder().fromPosition(5,4).toPosition(4,3).build(),//
+				CheckersMove.builder().fromPosition(4,7).toPosition(6,5).build(),//
+				CheckersMove.builder().fromPosition(7,4).toPosition(5,6).build(),//
+				CheckersMove.builder().fromPosition(2,5).toPosition(3,4).build(),//
+				CheckersMove.builder().fromPosition(4,3).toPosition(2,5).build(),//
+				CheckersMove.builder().fromPosition(1,6).toPosition(3,4).build(),//
+				CheckersMove.builder().fromPosition(7,2).toPosition(6,1).build(),//
+				CheckersMove.builder().fromPosition(3,4).toPosition(4,5).build(),//
+				CheckersMove.builder().fromPosition(5,6).toPosition(3,4).build(),//
+				CheckersMove.builder().fromPosition(1,2).toPosition(2,1).build(),//
+				CheckersMove.builder().fromPosition(3,4).toPosition(2,5).build(),//
+				CheckersMove.builder().fromPosition(0,7).toPosition(1,6).build(),//
+				CheckersMove.builder().fromPosition(2,5).toPosition(0,7).build(),//
+				CheckersMove.builder().fromPosition(2,1).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(6,7).toPosition(5,6).build(),//
+				CheckersMove.builder().fromPosition(0,5).toPosition(1,4).build(),//
+				CheckersMove.builder().fromPosition(0,7).toPosition(1,6).build(),//
+				CheckersMove.builder().fromPosition(3,2).toPosition(4,1).build(),//
+				CheckersMove.builder().fromPosition(5,0).toPosition(3,2).build(),//
+				CheckersMove.builder().fromPosition(1,4).toPosition(2,3).build(),//
+				CheckersMove.builder().fromPosition(3,2).toPosition(1,4).build()//
+		).forEach(move -> {//
+			try {
+				board.processMove(move);
+			} catch (BadMoveException e) {
+				board.printBoard();
+				fail(e.getMessage());
+			}
+		});
+		board.printBoard();
+>>>>>>> 5bdd2832564b0d1b7dad56a3c5d8b31f847b7e8c
 	}
 
 
