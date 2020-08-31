@@ -24,10 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0c580b58-956c-4074-b63a-6255f7eb168e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/FernandezPrudencioBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/FernandezPrudencioBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/NodeBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fernandezprudencio/NodeBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/checkers/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/checkers/AppTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,17 +89,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="checkers.test" />
       <useClassPathOnly />
@@ -142,6 +127,8 @@
       <workItem from="1598658216209" duration="1283000" />
       <workItem from="1598659559709" duration="5538000" />
       <workItem from="1598743669959" duration="15872000" />
+      <workItem from="1598900231677" duration="164000" />
+      <workItem from="1598900436053" duration="86000" />
     </task>
     <servers />
   </component>
@@ -231,7 +218,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/checkers/CheckersBoard.java</url>
-          <line>252</line>
+          <line>308</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
