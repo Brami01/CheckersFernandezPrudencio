@@ -18,6 +18,7 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         }
         throw new IllegalArgumentException("Something went wrong");
     }
+
     public CheckersMove checkingAllMoves(CheckersBoard board) throws BadMoveException {
         NodeBoard initialBoard = new NodeBoard(board);
         LinkedList<NodeBoard> q = new LinkedList<>();
@@ -25,36 +26,44 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         do {
             NodeBoard n = q.removeFirst();
             LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(successors(n));
-            s = ordenar(s);
-            if (!s.isEmpty()) {
-                if (s.getFirst().initialPlayer == s.getFirst().board.otherPlayer()) { //enemy
-                    for (int i = 0; i<(Math.floor(s.size()*0.5)); i++) {
-                        s.removeLast();
-                    }
-                }
-            }
+            if (!s.isEmpty()) //We eliminate non efficient uitlite successors
+                s = getEfficientNodeBoards(s);
             //BFS
             q.addAll(s);
-            if(q.isEmpty()){
+            if(q.isEmpty())
                 return n.getMoveDone();
-            }
-
-        } while (!q.isEmpty() && q.getFirst().depth < 6);
-        NodeBoard bestNodeBoard =q.removeFirst();
+        } while (condicionDeProfundidad(q));
+        return getBestNodeBoard(q,q.removeFirst()).getMoveDone();
+    }
+    private NodeBoard getBestNodeBoard(LinkedList<NodeBoard> q, NodeBoard bestNodeBoard) {
         int highestUtility = bestNodeBoard.accumulatedUtility;
-        for (NodeBoard possibleSelected: q ) {
+        for (NodeBoard possibleSelected: q) {
             if(possibleSelected.accumulatedUtility>highestUtility){
                 bestNodeBoard = possibleSelected;
                 highestUtility = possibleSelected.accumulatedUtility;
             }
         }
-        return bestNodeBoard.getMoveDone();
+        return bestNodeBoard;
     }
-
+    private boolean condicionDeProfundidad(LinkedList<NodeBoard> q) {
+        return !q.isEmpty() && q.getFirst().depth < 6;
+    }
+    private LinkedList<NodeBoard> getEfficientNodeBoards(LinkedList<NodeBoard> s) {
+        if (s.getFirst().initialPlayer == s.getFirst().board.otherPlayer()) { //enemy
+            s = ordenar(s);
+            for (int i = 0; i<(Math.floor(s.size()*0.5)); i++) {
+                s.removeLast();
+            }
+        }
+        return s;
+    }
     public List<NodeBoard> successors (NodeBoard nodeBoard) throws BadMoveException {
         List<CheckersMove> possiblePlays = nodeBoard.board.possibleCaptures();
         if(possiblePlays.isEmpty())
             possiblePlays = nodeBoard.board.possibleMoves();
+        return generateSuccessors(nodeBoard, possiblePlays);
+    }
+    private List<NodeBoard> generateSuccessors(NodeBoard nodeBoard, List<CheckersMove> possiblePlays) throws BadMoveException {
         List<NodeBoard> possibleFutureBoards = new LinkedList<>();
         for (CheckersMove possiblePlay: possiblePlays) {
             NodeBoard possibleStateofBoard = new NodeBoard(nodeBoard, possiblePlay);
@@ -62,7 +71,6 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         }
         return possibleFutureBoards;
     }
-
     public LinkedList<NodeBoard> ordenar(LinkedList<NodeBoard> nodeBoards) {
         LinkedList<NodeBoard> n = new LinkedList<>();
         while (!nodeBoards.isEmpty()) {
@@ -79,75 +87,3 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         return n;
     }
 }
-
-
-/*
-    private CheckersMove searchBestAction(List<CheckersMove> children, CheckersBoard board) throws BadMoveException {
-        CheckersMove min = searchMin(children,board);
-        CheckersMove max = searchMax(children,board);
-        // Reward and move selected
-        HashMap <Integer, CheckersMove> possibleMin = new HashMap<>();
-        HashMap <Integer, CheckersMove> possibleMax = new HashMap<>();
-
-        List<CheckersBoard> boards = new ArrayList<>();
-
-        for (CheckersMove move: children) {
-           boards.add(board.clone());
-           boards.get(boards.size()-1).processMove(move);
-        }
-        return null;
-    }
-*/
-
-/*
-    private List<CheckersMove> successors (CheckersBoard board) {
-
-        List<CheckersBoard> boards = new ArrayList<>();
-        List<CheckersMove> possibleCaptures = board.possibleCaptures();
-        List<CheckersMove> possibleMoves = board.possibleMoves();
-
-        if(possibleCaptures.isEmpty())
-
-            return  possibleMoves;
-        else
-            return possibleCaptures;
-    }
-*/
-
-/*
-    private CheckersMove searchMax(List<CheckersMove> children, CheckersBoard board) {
-        return null;
-    }
-
-    private CheckersMove searchMin(List<CheckersMove> children, CheckersBoard board) {
-        return null;
-    }
-*/
-
-
-
-/*
-        List<CheckersMove> possibleCaptures = board.possibleCaptures();
-        if (possibleCaptures.isEmpty()) {
-            List<CheckersMove> possibleMoves = board.possibleMoves();
-            return possibleMoves.get(ThreadLocalRandom.current().nextInt(possibleMoves.size()));
-        }
-        return possibleCaptures.get(ThreadLocalRandom.current().nextInt(possibleCaptures.size()));
-<<<<<<< HEAD
-    }
-}
-=======
-
-
-            if (board.otherPlayer() == CheckersBoard.Player.RED) {
-                if(possibleSelected.accumulatedUtility>highestUtility){
-                    bestNodeBoard = possibleSelected;
-                    highestUtility = possibleSelected.accumulatedUtility;
-                }
-            } else {
-                if(possibleSelected.accumulatedUtility<lowestUtility){
-                    bestNodeBoard = possibleSelected;
-                    lowestUtility = possibleSelected.accumulatedUtility;
-                }
-            }
-*/

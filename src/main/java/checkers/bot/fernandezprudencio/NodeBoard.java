@@ -20,7 +20,6 @@ public class NodeBoard {
         this.moveDone = null;
         this.parent = null;
     }
-
     //Creates possible Future Moves
     public NodeBoard(NodeBoard parent, CheckersMove move) throws BadMoveException {
         this.depth = parent.depth + 1;
@@ -30,35 +29,38 @@ public class NodeBoard {
         this.parent = parent;
         this.board = createBoardWithAssignedMove(parent.board,move);
     }
-
     private CheckersBoard createBoardWithAssignedMove(CheckersBoard board, CheckersMove move) throws BadMoveException {
         CheckersBoard newBoard = board.clone();
         newBoard.processMove(move);
         if(isCaptureMove(move)){
             addCaptureUtility(board,move);
         }
-        addCoronationUtility(board,move);
+        addPossibleCoronationUtility(board,move);
         return newBoard;
     }
-
-    private void addCoronationUtility (CheckersBoard board, CheckersMove move) {
-        if(move.getEndRow()==7 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.RED_PLAIN) {
-            if (initialPlayer == CheckersBoard.Player.RED)
+    private void addPossibleCoronationUtility (CheckersBoard board, CheckersMove move) {
+        if(redCoronationInCurrentMove(board, move)) {
+            if (!iamblack())
                 accumulatedUtility += 2;
             else
                 accumulatedUtility -= 2;
         }
-        if(move.getEndRow()==0 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.BLACK_CROWNED) {
-            if (initialPlayer == CheckersBoard.Player.BLACK)
+        if(blackCoronationInCurrentMove(board, move)) {
+            if (iamblack())
                 accumulatedUtility += 2;
             else
                 accumulatedUtility -= 2;
         }
     }
-
-    private void addCaptureUtility (CheckersBoard board, CheckersMove move){
-        if (initialPlayer == CheckersBoard.Player.BLACK) {
-            switch (getMiddlePiece(board,move)){
+    private boolean blackCoronationInCurrentMove(CheckersBoard board, CheckersMove move) {
+        return move.getEndRow()==0 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.BLACK_PLAIN;
+    }
+    private boolean redCoronationInCurrentMove(CheckersBoard board, CheckersMove move) {
+        return move.getEndRow()==7 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.RED_PLAIN;
+    }
+    private void addCaptureUtility (CheckersBoard board, CheckersMove move) {
+        if (iamblack()) {
+            switch (getMiddlePiece(board, move)) {
                 case CheckersBoard.RED_CROWNED:
                     accumulatedUtility += 4;
                     break;
@@ -73,7 +75,7 @@ public class NodeBoard {
                     break;
             }
         } else {
-            switch (getMiddlePiece(board,move)){
+            switch (getMiddlePiece(board, move)) {
                 case CheckersBoard.RED_CROWNED:
                     accumulatedUtility -= 4;
                     break;
@@ -89,15 +91,15 @@ public class NodeBoard {
             }
         }
     }
-
+    private boolean iamblack() {
+        return initialPlayer == CheckersBoard.Player.BLACK;
+    }
     private char getMiddlePiece(CheckersBoard board, CheckersMove move){
         return board.getBoard()[move.getMiddlePosition().getRow()][move.getMiddlePosition().getCol()];
     }
-
     private boolean isCaptureMove(CheckersMove move) {
         return Math.abs(move.getEndRow() - move.getStartRow()) == 2 && Math.abs(move.getEndCol() - move.getStartCol()) == 2;
     }
-
     public CheckersMove getMoveDone() {
         if (parent.parent == null) {
             return moveDone;
