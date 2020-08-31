@@ -22,7 +22,7 @@ public class CheckersBoard {
 	private char[][] board;
 	private Player currentPlayer;
 
-	private CheckersBoard() {
+	protected CheckersBoard() {
 		board = new char[8][8];
 	}
 
@@ -43,6 +43,10 @@ public class CheckersBoard {
 
 	public Player otherPlayer() {
 		return otherPlayer(currentPlayer);
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	public CheckersBoard clone() {
