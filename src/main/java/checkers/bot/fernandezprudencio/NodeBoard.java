@@ -57,20 +57,22 @@ public class NodeBoard {
     }
     private void addCoronationUtility (CheckersBoard board, CheckersMove move) {
         if(move.getEndRow()==7 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.RED_PLAIN) {
-            if (getInitialPlayer(board) == CheckersBoard.Player.RED)
+            if (initialPlayer == CheckersBoard.Player.RED)
                 accumulatedUtility += 2;
             else
                 accumulatedUtility -= 2;
         }
         if(move.getEndRow()==0 && board.getBoard()[move.getStartRow()][move.getStartCol()] == CheckersBoard.BLACK_CROWNED) {
-            if (getInitialPlayer(board) == CheckersBoard.Player.BLACK)
+            if (initialPlayer == CheckersBoard.Player.BLACK)
                 accumulatedUtility += 2;
             else
                 accumulatedUtility -= 2;
+
         }
     }
+
     private void addCaptureUtility (CheckersBoard board, CheckersMove move){
-        if (getInitialPlayer(board) == CheckersBoard.Player.BLACK) {
+        if (initialPlayer == CheckersBoard.Player.BLACK) {
             switch (getMiddlePiece(board,move)){
                 case CheckersBoard.RED_CROWNED:
                     accumulatedUtility += 4;

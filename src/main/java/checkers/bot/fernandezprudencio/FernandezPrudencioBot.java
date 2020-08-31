@@ -6,10 +6,7 @@ import checkers.CheckersPlayer;
 import checkers.exception.BadMoveException;
 import jdk.jshell.spi.ExecutionControl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,6 +30,19 @@ public class FernandezPrudencioBot implements CheckersPlayer {
 
             //n.printBoard();
             LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(successors(n));
+            s = ordenar(s);
+            if (!s.isEmpty()) {
+                if (s.getFirst().initialPlayer == s.getFirst().board.otherPlayer()) { //enemy
+                    for (int i = 0; i<(Math.floor(s.size()*0.6)); i++) {
+                        //System.out.println(s.getFirst().board.otherPlayer());
+                        s.removeLast();
+                    }
+                } /*else {
+                    for (int i = 0; i<(Math.floor(s.size()*0.6)); i++) {
+                        s.removeFirst();
+                    }
+                }*/
+            }
             //DFS
             //q.addAll(0,s);
             //BFS
@@ -40,22 +50,16 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             if(q.isEmpty()){
                 return n.getMoveDone();
             }
-        } while (!q.isEmpty() && q.getFirst().depth < 6);
+
+        } while (!q.isEmpty() && q.getFirst().depth < 8);
         //if(!q.isEmpty()){
         NodeBoard bestNodeBoard =q.removeFirst();
-        int highestUtility = Integer.MIN_VALUE;
-        int lowestUtility = Integer.MAX_VALUE;
+        int highestUtility = bestNodeBoard.accumulatedUtility;
+        int lowestUtility = bestNodeBoard.accumulatedUtility;
         for (NodeBoard possibleSelected: q ) {
-            if (board.otherPlayer() == CheckersBoard.Player.RED) {
-                if(possibleSelected.accumulatedUtility>highestUtility){
-                    bestNodeBoard = possibleSelected;
-                    highestUtility = possibleSelected.accumulatedUtility;
-                }
-            } else {
-                if(possibleSelected.accumulatedUtility<lowestUtility){
-                    bestNodeBoard = possibleSelected;
-                    lowestUtility = possibleSelected.accumulatedUtility;
-                }
+            if(possibleSelected.accumulatedUtility>highestUtility){
+                bestNodeBoard = possibleSelected;
+                highestUtility = possibleSelected.accumulatedUtility;
             }
         }
         return bestNodeBoard.getMoveDone();
@@ -69,12 +73,28 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             possiblePlays = nodeBoard.board.possibleMoves();
         List<NodeBoard> possibleFutureBoards = new LinkedList<>();
         for (CheckersMove possiblePlay: possiblePlays) {
-            NodeBoard possibleStateofBoard = new NodeBoard(nodeBoard,possiblePlay);
+            NodeBoard possibleStateofBoard = new NodeBoard(nodeBoard, possiblePlay);
             possibleFutureBoards.add(possibleStateofBoard);
-
-        for (NodeBoard n: possibleFutureBoards) {
         }
         return possibleFutureBoards;
+    }
+
+    public LinkedList<NodeBoard> ordenar(LinkedList<NodeBoard> nodeBoards) {
+        LinkedList<NodeBoard> n = new LinkedList<>();
+        while (!nodeBoards.isEmpty()) {
+            NodeBoard m = nodeBoards.getFirst();
+            int i = Integer.MAX_VALUE;
+            int j = -1;
+            for (NodeBoard a: nodeBoards) {
+                if (a.accumulatedUtility < i) {
+                    m = a;
+                    i = a.accumulatedUtility;
+                }
+                j++;
+            }
+            n.add(nodeBoards.remove(j));
+        }
+        return n;
     }
 
 }
@@ -136,14 +156,17 @@ public class FernandezPrudencioBot implements CheckersPlayer {
     }
 }
 =======
+
+
+            if (board.otherPlayer() == CheckersBoard.Player.RED) {
+                if(possibleSelected.accumulatedUtility>highestUtility){
+                    bestNodeBoard = possibleSelected;
+                    highestUtility = possibleSelected.accumulatedUtility;
+                }
+            } else {
+                if(possibleSelected.accumulatedUtility<lowestUtility){
+                    bestNodeBoard = possibleSelected;
+                    lowestUtility = possibleSelected.accumulatedUtility;
+                }
+            }
 */
-
-
-
-
-
-
-
-
-
->>>>>>> 714a68f20c0a7231d6928fb49aed29bf9f429b77
