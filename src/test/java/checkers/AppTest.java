@@ -84,9 +84,26 @@ public class AppTest {
 		//s5.forEach(ss -> System.out.println("Initial player: "+ss.initialPlayer));
 		LinkedList<NodeBoard> s6 = new LinkedList<NodeBoard>(player3.successors(s5.removeFirst()));
 		//s6.forEach(ss -> System.out.println("Initial player: "+ss.initialPlayer));
-		}
+		LinkedList<NodeBoard> s7 = new LinkedList<NodeBoard>(player3.successors(s6.removeFirst()));
+		LinkedList<NodeBoard> s8 = new LinkedList<NodeBoard>(player3.successors(s7.removeFirst()));
+		LinkedList<NodeBoard> s9 = new LinkedList<NodeBoard>(player3.successors(s8.removeFirst()));
+		LinkedList<NodeBoard> s10 = new LinkedList<NodeBoard>(player3.successors(s9.removeFirst()));
+		LinkedList<NodeBoard> s11 = new LinkedList<NodeBoard>(player3.successors(s10.removeFirst()));
+		LinkedList<NodeBoard> s12 = new LinkedList<NodeBoard>(player3.successors(s11.removeFirst()));
+		LinkedList<NodeBoard> s13 = new LinkedList<NodeBoard>(player3.successors(s12.removeFirst()));
 
-		@Test
+		for (NodeBoard n: s13){
+			System.out.println(n.accumulatedUtility);
+			n.board.printBoard();
+		}
+		LinkedList<NodeBoard> s14 = player3.ordenar(s13);
+
+		for (NodeBoard n: s14){
+			System.out.println(n.accumulatedUtility);
+		}
+	}
+
+	@Test
 	public void moveDoneinCheckingAllMoves() throws BadMoveException {
 		FernandezPrudencioBot player3 = new FernandezPrudencioBot();
 		CheckersBoard initBoard = CheckersBoard.initBoard();
@@ -94,6 +111,7 @@ public class AppTest {
 		LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(player3.successors(rootBoard));
 		LinkedList<NodeBoard> s2 = new LinkedList<NodeBoard>(player3.successors(s.removeFirst()));
 		LinkedList<NodeBoard> s3 = new LinkedList<NodeBoard>(player3.successors(s2.removeFirst()));
+
 		//System.out.println(s3.getFirst().getMoveDone().getEndCol() +" "+s3.getFirst().getMoveDone().getEndRow());
 	}
 
