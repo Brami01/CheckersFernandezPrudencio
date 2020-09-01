@@ -26,13 +26,12 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         do {
             NodeBoard n = q.removeFirst();
             LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(successors(n));
-            if (!s.isEmpty()) //We eliminate non efficient uitlite successors
-                s = getEfficientNodeBoards(s);
+
             //BFS
             q.addAll(s);
             if(q.isEmpty())
                 return n.getMoveDone();
-        } while (condicionDeProfundidad(q));
+        } while (q.getFirst().depth < 4);
         return getBestNodeBoard(q,q.removeFirst()).getMoveDone();
     }
     private NodeBoard getBestNodeBoard(LinkedList<NodeBoard> q, NodeBoard bestNodeBoard) {
@@ -45,9 +44,7 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         }
         return bestNodeBoard;
     }
-    private boolean condicionDeProfundidad(LinkedList<NodeBoard> q) {
-        return !q.isEmpty() && q.getFirst().depth < 6;
-    }
+
     private LinkedList<NodeBoard> getEfficientNodeBoards(LinkedList<NodeBoard> s) {
         if (s.getFirst().initialPlayer == s.getFirst().board.otherPlayer()) { //enemy
             s = ordenar(s);
@@ -86,4 +83,9 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         }
         return n;
     }
+
+
 }
+
+//if (!s.isEmpty()) //We eliminate non efficient uitlite successors
+//s = getEfficientNodeBoards(s);

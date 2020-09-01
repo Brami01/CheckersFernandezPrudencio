@@ -33,11 +33,19 @@ public class NodeBoard {
         CheckersBoard newBoard = board.clone();
         newBoard.processMove(move);
         if(isCaptureMove(move)){
-            addCaptureUtility(board,move);
+            addCaptureUtility(board, move);
+            addMultipleCaptureUtility(board, move);
         }
         addPossibleCoronationUtility(board,move);
         return newBoard;
     }
+
+    private void addMultipleCaptureUtility(CheckersBoard board, CheckersMove move) {
+        if (isCapturePossibleAtPosition(board.getCurrentPlayer(), move.getEndRow(), move.getEndCol(), board)) {
+            addCaptureUtility(board, move);
+        }
+    }
+
     private void addPossibleCoronationUtility (CheckersBoard board, CheckersMove move) {
         if(redCoronationInCurrentMove(board, move)) {
             if (!iamblack())
@@ -105,5 +113,33 @@ public class NodeBoard {
             return moveDone;
         }
         return parent.getMoveDone();
+    }
+
+    private boolean isCapturePossibleAtPosition(CheckersBoard.Player player, int i, int j,  CheckersBoard nodeBoard) {
+        return isDownRightCapturePossible(player, i, j, nodeBoard)//
+                || isUpLeftCapturePossible(player, i, j, nodeBoard)//
+                || isDownLeftCapturePossible(player, i, j, nodeBoard)//
+                || isUpRightCapturePossible(player, i, j, nodeBoard);
+    }
+
+    private boolean isUpRightCapturePossible(CheckersBoard.Player player, int i, int j, CheckersBoard nodeBoard) {
+        return i > 1 && j < 6 && isEnemyPiece(player, i - 1, j + 1, nodeBoard) && nodeBoard.getBoard()[i - 2][j + 2] == CheckersBoard.EMPTY && nodeBoard.getBoard()[i][j] != CheckersBoard.RED_PLAIN;
+    }
+
+        private boolean isDownLeftCapturePossible(CheckersBoard.Player player, int i, int j, CheckersBoard nodeBoard) {
+        return i < 6 && j > 1 && isEnemyPiece(player, i + 1, j - 1, nodeBoard) && nodeBoard.getBoard()[i + 2][j - 2] == CheckersBoard.EMPTY && nodeBoard.getBoard()[i][j] != CheckersBoard.BLACK_PLAIN;
+    }
+
+    private boolean isUpLeftCapturePossible(CheckersBoard.Player player, int i, int j, CheckersBoard nodeBoard) {
+        return i > 1 && j > 1 && isEnemyPiece(player, i - 1, j - 1, nodeBoard) && nodeBoard.getBoard()[i - 2][j - 2] == CheckersBoard.EMPTY && nodeBoard.getBoard()[i][j] != CheckersBoard.RED_PLAIN;
+    }
+
+    private boolean isDownRightCapturePossible(CheckersBoard.Player player, int i, int j, CheckersBoard nodeBoard) {
+        return i < 6 && j < 6 && isEnemyPiece(player, i + 1, j + 1, nodeBoard) && nodeBoard.getBoard()[i + 2][j + 2] == CheckersBoard.EMPTY && nodeBoard.getBoard()[i][j] != CheckersBoard.BLACK_PLAIN;
+    }
+
+    private boolean isEnemyPiece(CheckersBoard.Player player, int i, int j, CheckersBoard nodeBoard) {
+        return (player == CheckersBoard.Player.BLACK && Character.toLowerCase(nodeBoard.getBoard()[i][j]) == 'r')//
+                || (player == CheckersBoard.Player.RED && Character.toLowerCase(nodeBoard.getBoard()[i][j]) == 'b');
     }
 }
