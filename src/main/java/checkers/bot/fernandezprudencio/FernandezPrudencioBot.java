@@ -7,6 +7,7 @@ import checkers.exception.BadMoveException;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class FernandezPrudencioBot implements CheckersPlayer {
     @Override
@@ -32,7 +33,7 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             if(q.isEmpty())
                 return n.getMoveDone();
         } while (q.getFirst().depth < 4);
-        return getBestNodeBoard(q,q.removeFirst()).getMoveDone();
+        return getBestRandomNodeBoard(q,q.removeFirst()).getMoveDone();
     }
     private NodeBoard getBestNodeBoard(LinkedList<NodeBoard> q, NodeBoard bestNodeBoard) {
         int highestUtility = bestNodeBoard.accumulatedUtility;
@@ -43,6 +44,26 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             }
         }
         return bestNodeBoard;
+    }
+    private NodeBoard getBestRandomNodeBoard(LinkedList<NodeBoard> q, NodeBoard bestNodeBoard) {
+        int highestUtility = bestNodeBoard.accumulatedUtility;
+        for (NodeBoard possibleSelected: q) { //Gets highest utility
+            if(possibleSelected.accumulatedUtility>highestUtility){
+                highestUtility = possibleSelected.accumulatedUtility;
+            }
+        }
+        LinkedList<NodeBoard> bestNodes = new LinkedList<>();
+        for (NodeBoard possibleSelected: q) {
+            if(highestUtility == possibleSelected.accumulatedUtility){
+                bestNodes.add(possibleSelected);
+            }
+        }
+        if(bestNodes.size()==1){ //Only one
+            return bestNodes.getFirst();
+        }
+        else {// If there are more possibilities with max utility
+            return bestNodes.get(ThreadLocalRandom.current().nextInt(bestNodes.size()));
+        }
     }
 
     private LinkedList<NodeBoard> getEfficientNodeBoards(LinkedList<NodeBoard> s) {

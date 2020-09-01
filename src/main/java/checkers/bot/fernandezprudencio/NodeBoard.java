@@ -70,10 +70,10 @@ public class NodeBoard {
         if (iamblack()) {
             switch (getMiddlePiece(board, move)) {
                 case CheckersBoard.RED_CROWNED:
-                    accumulatedUtility += 4;
+                    accumulatedUtility += 5;
                     break;
                 case CheckersBoard.RED_PLAIN:
-                    accumulatedUtility += 3;
+                    accumulatedUtility += 4;
                     break;
                 case CheckersBoard.BLACK_CROWNED:
                     accumulatedUtility -= 4;
@@ -91,10 +91,10 @@ public class NodeBoard {
                     accumulatedUtility -= 3;
                     break;
                 case CheckersBoard.BLACK_CROWNED:
-                    accumulatedUtility += 4;
+                    accumulatedUtility += 5;
                     break;
                 case CheckersBoard.BLACK_PLAIN:
-                    accumulatedUtility += 3;
+                    accumulatedUtility += 4;
                     break;
             }
         }
