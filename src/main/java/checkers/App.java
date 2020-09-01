@@ -15,7 +15,8 @@ public class App {
         CheckersPlayer player1 = new KeyboardPlayer();
         CheckersPlayer player2 = new GrayRandomBot();
         CheckersPlayer player3 = new FernandezPrudencioBot();
-        Optional<CheckersPlayer> loser = game.play(player3, player3);
+        CheckersPlayer player4 = new FernandezPrudencioBot();
+        Optional<CheckersPlayer> loser = game.play(player2, player3);
         loser.ifPresent(//
                 checkersPlayer -> System.out.println("LOSER! " + checkersPlayer.getClass().getName()));
     }

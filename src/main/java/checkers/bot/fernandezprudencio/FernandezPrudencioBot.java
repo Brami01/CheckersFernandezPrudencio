@@ -27,21 +27,28 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         do {
             NodeBoard n = q.removeFirst();
             LinkedList<NodeBoard> s = new LinkedList<NodeBoard>(successors(n));
-
+            //s =getEfficientNodeBoards (s);
             //BFS
-            q.addAll(s);
+            q.add(getMinMaxNode(s));
+            s.forEach(ss -> ss.board.printBoard());
             if(q.isEmpty())
                 return n.getMoveDone();
-        } while (q.getFirst().depth < 4);
-        /*
-        if(q.getFirst().initialPlayer == CheckersBoard.Player.RED) {
-            return getBestRandomNodeBoard(q,q.removeFirst()).getMoveDone();
-        } else {
-            return getBestNodeBoard(q,q.removeFirst()).getMoveDone();
-        }
-        */
+        } while (q.getFirst().depth < 10);
         return getBestRandomNodeBoard(q,q.removeFirst()).getMoveDone();
     }
+
+    private NodeBoard getMinMaxNode(LinkedList<NodeBoard> s) {
+        NodeBoard bestNode = s.removeFirst();
+        bestNode.accumulatedUtility = heuristicCountPiecesV2(bestNode);
+            for (NodeBoard n: s) {
+                n.accumulatedUtility = heuristicCountPiecesV2(n);
+                if(bestNode.accumulatedUtility<n.accumulatedUtility){
+                    bestNode = n;
+                }
+            }
+        return bestNode;
+    }
+
     private NodeBoard getBestNodeBoard(LinkedList<NodeBoard> q, NodeBoard bestNodeBoard) {
         int highestUtility = bestNodeBoard.accumulatedUtility;
         for (NodeBoard possibleSelected: q) {
@@ -75,15 +82,19 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             return bestNodes.get(ThreadLocalRandom.current().nextInt(bestNodes.size()));
         }
     }
-
     private LinkedList<NodeBoard> getEfficientNodeBoards(LinkedList<NodeBoard> s) {
-        if (s.getFirst().initialPlayer == s.getFirst().board.otherPlayer()) { //enemy
-            s = ordenar(s);
-            for (int i = 0; i<(Math.floor(s.size()*0.5)); i++) {
-                s.removeLast();
+        s = ordenar(s);
+        while (s.size() > 1) {
+            if (isEnemyTurnInFutureBoard(s)) {
+                s.removeLast(); //Will drop best options for enemy
+            } else {
+                s.removeFirst(); //Will drop worst options for me
             }
         }
         return s;
+    }
+    private boolean isEnemyTurnInFutureBoard(LinkedList<NodeBoard> s) {
+        return s.getFirst().initialPlayer == s.getFirst().board.otherPlayer();
     }
     public List<NodeBoard> successors (NodeBoard nodeBoard) throws BadMoveException {
         List<CheckersMove> possiblePlays = nodeBoard.board.possibleCaptures();
@@ -114,8 +125,23 @@ public class FernandezPrudencioBot implements CheckersPlayer {
         }
         return n;
     }
-
-
+    private boolean heuristicCountPieces(NodeBoard board) {
+        CheckersBoard.Player otherplayer = amIblack(board)
+                ? CheckersBoard.Player.RED
+                : CheckersBoard.Player.BLACK;
+        if(board.board.countPiecesOfPlayer(board.initialPlayer)>board.board.countPiecesOfPlayer(otherplayer))
+            return true;
+        return false;
+    }
+    private int heuristicCountPiecesV2(NodeBoard board) {
+        CheckersBoard.Player otherplayer = amIblack(board)
+                ? CheckersBoard.Player.RED
+                : CheckersBoard.Player.BLACK;
+        return  board.board.countPiecesOfPlayer(board.initialPlayer)-board.board.countPiecesOfPlayer(otherplayer);
+    }
+    private boolean amIblack(NodeBoard board) {
+        return board.initialPlayer == CheckersBoard.Player.BLACK;
+    }
 }
 
 //if (!s.isEmpty()) //We eliminate non efficient uitlite successors
