@@ -33,6 +33,13 @@ public class FernandezPrudencioBot implements CheckersPlayer {
             if(q.isEmpty())
                 return n.getMoveDone();
         } while (q.getFirst().depth < 4);
+        /*
+        if(q.getFirst().initialPlayer == CheckersBoard.Player.RED) {
+            return getBestRandomNodeBoard(q,q.removeFirst()).getMoveDone();
+        } else {
+            return getBestNodeBoard(q,q.removeFirst()).getMoveDone();
+        }
+        */
         return getBestRandomNodeBoard(q,q.removeFirst()).getMoveDone();
     }
     private NodeBoard getBestNodeBoard(LinkedList<NodeBoard> q, NodeBoard bestNodeBoard) {
@@ -58,7 +65,10 @@ public class FernandezPrudencioBot implements CheckersPlayer {
                 bestNodes.add(possibleSelected);
             }
         }
-        if(bestNodes.size()==1){ //Only one
+        if(bestNodeBoard.accumulatedUtility ==highestUtility) {
+            return bestNodeBoard;
+        }
+        if(bestNodes.size() == 1){ //Only one
             return bestNodes.getFirst();
         }
         else {// If there are more possibilities with max utility
