@@ -1,4 +1,4 @@
-package checkers.bot.fenandezprudencioversion2;
+package checkers.bot.fenandezprudenciofinalversion;
 
 import checkers.CheckersBoard;
 import checkers.CheckersMove;
@@ -34,7 +34,6 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
         }
         throw new IllegalArgumentException("Something went wrong");
     }
-
     private CheckersMove thenCoronate(CheckersBoard board) {
         CheckersMove move = null;
         if(board.getCurrentPlayer() == CheckersBoard.Player.RED) {
@@ -86,16 +85,6 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
         HashMap<ChildBoard, Integer> possibleScenariosValue = calculateValuesofChildBoards(possibleBoards(board), myPlayer);
         return calculateBestAction(possibleScenariosValue);
     }
-
-
-    private void huntHim(CheckersBoard board) {
-
-    }
-
-    private boolean thereIsOneEnemyLeft(CheckersBoard board) {
-        return board.countPiecesOfPlayer(board.otherPlayer()) == 1;
-    }
-
     private LinkedList<ChildBoard> casesIsacrificePiecesToKillAnotherOne(CheckersBoard board, LinkedList<ChildBoard> possibleBoards) {
         LinkedList<ChildBoard> bestCases = new LinkedList<>();
         for (ChildBoard possibleCase : possibleBoards) {

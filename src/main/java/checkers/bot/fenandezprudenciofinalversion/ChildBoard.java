@@ -1,4 +1,4 @@
-package checkers.bot.fenandezprudencioversion2;
+package checkers.bot.fenandezprudenciofinalversion;
 
 import checkers.CheckersBoard;
 import checkers.CheckersMove;
