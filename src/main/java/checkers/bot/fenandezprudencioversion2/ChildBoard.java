@@ -1,4 +1,4 @@
-package checkers.bot.fenandezprudenciofinalversion;
+package checkers.bot.fenandezprudencioversion2;
 
 import checkers.CheckersBoard;
 import checkers.CheckersMove;
@@ -9,12 +9,14 @@ public class ChildBoard {
     public CheckersMove move;
     public int depth;
     public ChildBoard parent;
+    public int utility;
     //Creates root ChildBoard
     public ChildBoard(CheckersBoard board) {
         this.board = board;
         this.depth = 0;
         this.move = null;
         this.parent = null;
+        this.utility = 0;
     }
     //Creates possible Future ChildBoards
     public ChildBoard(ChildBoard parent, CheckersMove move) throws BadMoveException {

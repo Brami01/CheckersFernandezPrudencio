@@ -1,4 +1,4 @@
-package checkers.bot.fenandezprudenciofinalversion;
+package checkers.bot.fenandezprudencioversion3;
 
 import checkers.CheckersBoard;
 import checkers.CheckersMove;
@@ -7,12 +7,13 @@ import checkers.exception.BadMoveException;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
-public class FernandezPrudencioBot2 implements CheckersPlayer {
+public class FernandezPrudencioBot3 implements CheckersPlayer {
     private static final int EXPLORATIONDEPTH = 4;
     private int roundsDoingNothingElseThanRunning = 0;
     @Override
-    public CheckersMove play(CheckersBoard board) {
+    public CheckersMove play(CheckersBoard board) {/*
         CheckersBoard.Player myPlayer = board.getCurrentPlayer();
         if(board.possibleCaptures().isEmpty()) {roundsDoingNothingElseThanRunning ++;}
         else {roundsDoingNothingElseThanRunning=0;}
@@ -20,9 +21,6 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
             if(roundsDoingNothingElseThanRunning > 3) { //Possible Draw Loop :(
                 if(iCanCoronate(board)) { //Force Coronations to get Better Chances
                     return thenCoronate(board);
-                }
-                if(iHaveMorePiecesThanEnemy(board)) {
-                    return returnPossibleAdvantageMove(board, myPlayer);
                 } else {
                     return returnNormalBestMove(board, myPlayer);
                 }
@@ -31,8 +29,52 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
             }
         } catch (BadMoveException e) {
             e.printStackTrace();
-        }
+        }*/
         throw new IllegalArgumentException("Something went wrong");
+    }
+
+
+    public ChildBoard possibleBoards(CheckersBoard board) throws BadMoveException {
+        ChildBoard rootBoard = new ChildBoard(board);
+        rootBoard.successors(4);
+        return rootBoard;
+    }
+
+
+
+/*
+
+    private ChildBoard findParent(ChildBoard rootBoard, ChildBoard childWhoIsParentOfSuccessors) {
+        for(ChildBoard board : rootBoard.childrenBoards) {
+            if(board.childrenBoards == null && board.board == childWhoIsParentOfSuccessors.board) {
+                return childWhoIsParentOfSuccessors;
+            } else if (board.childrenBoards!= null) {
+                return findParent(board, childWhoIsParentOfSuccessors);
+            }
+        }
+        throw new IllegalStateException("No parent existent");
+    }
+    private boolean iCanCoronate(CheckersBoard board) {
+        if(board.getCurrentPlayer() == CheckersBoard.Player.RED) {
+            for (int j = 0 ; j< board.getBoard().length;j++){
+                if(board.getBoard()[6][j] == CheckersBoard.RED_PLAIN && isDownLeftMovePossible(board,6,j)) {
+                    return true;
+                }
+                if(board.getBoard()[6][j] == CheckersBoard.RED_PLAIN && isDownRightMovePossible(board,6,j)) {
+                    return true;
+                }
+            }
+        } else {
+            for (int j = 0 ; j< board.getBoard().length;j++){
+                if(board.getBoard()[1][j] == CheckersBoard.BLACK_PLAIN && isUpLeftMovePossible(board,1,j)) {
+                    return true;
+                }
+                if(board.getBoard()[1][j] == CheckersBoard.BLACK_PLAIN && isUpRightMovePossible(board,1,j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private CheckersMove thenCoronate(CheckersBoard board) {
@@ -57,49 +99,13 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
         return move;
     }
 
-    private boolean iCanCoronate(CheckersBoard board) {
-        if(board.getCurrentPlayer() == CheckersBoard.Player.RED) {
-            for (int j = 0 ; j< board.getBoard().length;j++){
-                if(board.getBoard()[6][j] == CheckersBoard.RED_PLAIN && isDownLeftMovePossible(board,6,j)) {
-                    return true;
-                }
-                if(board.getBoard()[6][j] == CheckersBoard.RED_PLAIN && isDownRightMovePossible(board,6,j)) {
-                    return true;
-                }
-            }
-        } else {
-            for (int j = 0 ; j< board.getBoard().length;j++){
-                if(board.getBoard()[1][j] == CheckersBoard.BLACK_PLAIN && isUpLeftMovePossible(board,1,j)) {
-                    return true;
-                }
-                if(board.getBoard()[1][j] == CheckersBoard.BLACK_PLAIN && isUpRightMovePossible(board,1,j)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
-    private CheckersMove returnPossibleAdvantageMove(CheckersBoard board, CheckersBoard.Player myPlayer) throws BadMoveException {
-        HashMap<ChildBoard, Integer> possibleScenariosValue = calculateValuesofChildBoards(casesIsacrificePiecesToKillAnotherOne(board,possibleBoards(board)), myPlayer);
-        return calculateBestAction(possibleScenariosValue);
-    }
 
     private CheckersMove returnNormalBestMove(CheckersBoard board, CheckersBoard.Player myPlayer) throws BadMoveException {
         HashMap<ChildBoard, Integer> possibleScenariosValue = calculateValuesofChildBoards(possibleBoards(board), myPlayer);
         return calculateBestAction(possibleScenariosValue);
-    }
-
-    private LinkedList<ChildBoard> casesIsacrificePiecesToKillAnotherOne(CheckersBoard board, LinkedList<ChildBoard> possibleBoards) {
-        LinkedList<ChildBoard> bestCases = new LinkedList<>();
-        for (ChildBoard possibleCase : possibleBoards) {
-            if(iHaveAtLeastSamePiecesThanEnemy(board,possibleCase.board)) {
-                bestCases.add(possibleCase);
-            }
-        }
-        return bestCases;
-    }
-
+    }*/
+    /*
     private CheckersMove calculateBestAction(HashMap<ChildBoard, Integer> possibleScenariosValue) throws BadMoveException {
         int highestUtility = getHighestUtility(possibleScenariosValue.values());
         LinkedList<ChildBoard> possibleBestMoves = new LinkedList<>();
@@ -120,7 +126,7 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
         }
         return maxU;
     }
-    
+
     private HashMap<ChildBoard, Integer> calculateValuesofChildBoards(LinkedList<ChildBoard> possibleScenarios, CheckersBoard.Player myPlayer) {
         int utilityOfScenario;
         HashMap<ChildBoard, Integer> scenarioUtility = new HashMap<>();
@@ -140,32 +146,6 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
         return utility;
     }
 
-    private LinkedList<ChildBoard> possibleBoards(CheckersBoard board) throws BadMoveException {
-        ChildBoard initialBoard = new ChildBoard(board);
-        LinkedList<ChildBoard> q = new LinkedList<>();
-        q.add(initialBoard);
-        do {
-            ChildBoard n = q.removeFirst();
-            LinkedList<ChildBoard> s = new LinkedList<ChildBoard>(successors(n));
-            //BFS
-            q.addAll(s);
-            if(q.isEmpty()) {
-                q.add(n);
-                break;
-            }
-        } while (q.getFirst().depth < EXPLORATIONDEPTH);
-        return q;
-    }
-
-    private List<ChildBoard> successors(ChildBoard board) throws BadMoveException {
-        List<CheckersMove> possiblePlays = getPossiblePlays(board.board);
-        List<ChildBoard> possibleFutureBoards = new LinkedList<>();
-        for (CheckersMove possiblePlay: possiblePlays) {
-            ChildBoard possibleStateofBoard = new ChildBoard(board, possiblePlay);
-            possibleFutureBoards.add(possibleStateofBoard);
-        }
-        return possibleFutureBoards;
-    }
 
     private List<CheckersMove> getPossiblePlays(CheckersBoard board) {
         List<CheckersMove> possiblePlays = board.possibleCaptures();
@@ -176,14 +156,6 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
 
     private CheckersBoard.Player myOpponent(CheckersBoard.Player myColorOfPlayer) {
         return myColorOfPlayer == CheckersBoard.Player.RED ? CheckersBoard.Player.BLACK : CheckersBoard.Player.RED;
-    }
-
-    private boolean iHaveMorePiecesThanEnemy(CheckersBoard board) { //Directly to main board
-        return board.countPiecesOfPlayer(board.getCurrentPlayer())>board.countPiecesOfPlayer(board.otherPlayer());
-    }
-
-    private boolean iHaveAtLeastSamePiecesThanEnemy(CheckersBoard board, CheckersBoard childBoard) { //To Child boards
-        return childBoard.countPiecesOfPlayer(board.getCurrentPlayer())>=childBoard.countPiecesOfPlayer(board.otherPlayer());
     }
 
     private boolean isDownRightMovePossible(CheckersBoard board,int i, int j) {
@@ -205,5 +177,5 @@ public class FernandezPrudencioBot2 implements CheckersPlayer {
         return i > 0 && j > 0 && board.getBoard()[i - 1][j - 1] == CheckersBoard.EMPTY
                 // we exclude the non-crowned piece that cannot move in this direction
                 && board.getBoard()[i][j] != CheckersBoard.RED_PLAIN;
-    }
+    }*/
 }

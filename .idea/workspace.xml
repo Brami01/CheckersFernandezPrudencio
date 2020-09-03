@@ -26,7 +26,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/checkers/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/checkers/CheckersBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/CheckersBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudenciofinalversion/FernandezPrudencioBot2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudenciofinalversion/FernandezPrudencioBot2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudenciofinalversion/ChildBoard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudenciofinalversion/FernandezPrudencioBot2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/checkers/AppTestFernandez.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/checkers/AppTestFernandez.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +81,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Gradle.AppTestFernandez">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="checkers.App" />
       <module name="checkers.main" />
@@ -93,18 +95,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="AppTestFernandez" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;checkers.AppTestFernandez&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
     </configuration>
     <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="checkers.test" />
@@ -126,6 +134,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.AppTestFernandez" />
         <item itemvalue="JUnit.AppTest" />
         <item itemvalue="Application.App" />
       </list>
@@ -150,6 +159,12 @@
       <workItem from="1598975203404" duration="10823000" />
       <workItem from="1599055421051" duration="10626000" />
       <workItem from="1599067116534" duration="9066000" />
+      <workItem from="1599158926103" duration="1780000" />
+      <workItem from="1599160733188" duration="1710000" />
+      <workItem from="1599162466481" duration="1792000" />
+      <workItem from="1599164338761" duration="1784000" />
+      <workItem from="1599166147357" duration="1784000" />
+      <workItem from="1599167959103" duration="1111000" />
     </task>
     <servers />
   </component>
@@ -189,26 +204,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1598661894468" />
-    <state width="1877" height="544" key="GridCell.Tab.0.bottom" timestamp="1599080762669">
+    <state width="1877" height="77" key="GridCell.Tab.0.bottom" timestamp="1599168413190">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1598905400634" />
-    <state width="1877" height="544" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599080762669" />
-    <state width="1877" height="544" key="GridCell.Tab.0.center" timestamp="1599080762669">
+    <state width="1493" height="477" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1599159883270" />
+    <state width="1877" height="77" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599168413190" />
+    <state width="1877" height="77" key="GridCell.Tab.0.center" timestamp="1599168413190">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1598905400634" />
-    <state width="1877" height="544" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599080762669" />
-    <state width="1877" height="544" key="GridCell.Tab.0.left" timestamp="1599080762669">
+    <state width="1493" height="477" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1599159883269" />
+    <state width="1877" height="77" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599168413190" />
+    <state width="1877" height="77" key="GridCell.Tab.0.left" timestamp="1599168413189">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1598905400633" />
-    <state width="1877" height="544" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599080762669" />
-    <state width="1877" height="544" key="GridCell.Tab.0.right" timestamp="1599080762669">
+    <state width="1493" height="477" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1599159883269" />
+    <state width="1877" height="77" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599168413189" />
+    <state width="1877" height="77" key="GridCell.Tab.0.right" timestamp="1599168413190">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1493" height="151" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1598905400634" />
-    <state width="1877" height="544" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599080762669" />
+    <state width="1493" height="477" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1599159883270" />
+    <state width="1877" height="77" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599168413190" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1598983720081">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -247,5 +262,9 @@
     </state>
     <state x="-1822" y="199" key="extract.method.dialog/-1920.0.1536.832/0.0.1920.1040@-1920.0.1536.832" timestamp="1598905164840" />
     <state x="690" y="281" key="extract.method.dialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599075209341" />
+    <state x="660" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1599168925989">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="660" y="277" key="refactoring.ChangeSignatureDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1599168925989" />
   </component>
 </project>

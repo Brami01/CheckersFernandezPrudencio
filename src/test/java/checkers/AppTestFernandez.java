@@ -3,7 +3,8 @@
  */
 package checkers;
 
-import checkers.bot.gray.GrayRandomBot;
+import checkers.bot.fenandezprudencioversion3.ChildBoard;
+import checkers.bot.fenandezprudencioversion3.FernandezPrudencioBot3;
 import checkers.exception.BadMoveException;
 import org.junit.Test;
 
@@ -14,6 +15,20 @@ import java.util.stream.Stream;
 import static org.junit.Assert.*;
 
 public class AppTestFernandez {
+
+    @Test
+    public void succesorsTest() throws BadMoveException {
+        FernandezPrudencioBot3 player3 = new FernandezPrudencioBot3();
+        CheckersBoard initBoard = CheckersBoard.initBoard();
+        ChildBoard rootBoard = new ChildBoard(initBoard);
+        rootBoard.successors(3);
+        rootBoard.childrenBoards.forEach(n -> n.board.printBoard());
+        rootBoard.childrenBoards.get(0).childrenBoards.forEach(n -> n.board.printBoard());
+        rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.forEach(n -> n.board.printBoard());
+    }
+
+
+
 /*
     @Test
     public void whatIsTheInitialPlayerOops() throws BadMoveException {
