@@ -21,10 +21,17 @@ public class AppTestFernandez {
         FernandezPrudencioBot3 player3 = new FernandezPrudencioBot3();
         CheckersBoard initBoard = CheckersBoard.initBoard();
         ChildBoard rootBoard = new ChildBoard(initBoard);
-        rootBoard.successors(3);
-        rootBoard.childrenBoards.forEach(n -> n.board.printBoard());
-        rootBoard.childrenBoards.get(0).childrenBoards.forEach(n -> n.board.printBoard());
-        rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.forEach(n -> n.board.printBoard());
+        rootBoard.successors(4);
+        //rootBoard.childrenBoards.forEach(n -> n.board.printBoard());
+        //rootBoard.childrenBoards.get(0).childrenBoards.forEach(n -> n.board.printBoard());
+        //rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.forEach(n -> n.board.printBoard());
+        //System.out.println(rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.get(0).depth);
+        //System.out.println(rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.get(0).childrenBoards.get(0).depth);
+        //rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.get(5).childrenBoards.forEach(n-> n.board.printBoard());
+        //rootBoard.childrenBoards.get(0).childrenBoards.get(0).childrenBoards.get(5).childrenBoards.forEach(n-> System.out.println(n.utility));
+        System.out.println("uh oh");
+        rootBoard.utility = player3.getMiniMaxUtilityOf(rootBoard);
+        System.out.println(rootBoard.utility);
     }
 
 

@@ -34,7 +34,7 @@ public class ChildBoard {
 
     public void successors(int maxdepth) throws BadMoveException {
         if(this.depth < maxdepth) {
-            this.childrenBoards = generatesuccessors(this,maxdepth-1);
+            this.childrenBoards = generatesuccessors(this,maxdepth);
             for(ChildBoard children: this.childrenBoards){
                 children.successors(maxdepth);
             }
@@ -48,6 +48,9 @@ public class ChildBoard {
             ChildBoard possibleStateofBoard = new ChildBoard(board, possiblePlay);
             if(possibleStateofBoard.depth == finalDepth) {
                 possibleStateofBoard.utility=calculateUtility(possibleStateofBoard.board);
+                possibleStateofBoard.board.printBoard();
+                System.out.println(possibleStateofBoard.utility);
+                System.out.println(possibleStateofBoard.depth);
             }
             possibleFutureBoards.add(possibleStateofBoard);
         }
