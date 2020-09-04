@@ -1,4 +1,4 @@
-package checkers.bot.fenandezprudencioversion3;
+package checkers.bot.fenandezprudencio;
 
 import checkers.CheckersBoard;
 import checkers.CheckersMove;
@@ -70,24 +70,15 @@ public class ChildBoard {
 
     private int calculateUtility(CheckersBoard newBoard) {
         CheckersBoard.Player myPlayer = getInitialPlayer();
-        /*if (newBoard.countPiecesOfPlayer(myPlayer) == 0) {
-            return -100;
-        }
-        if (newBoard.countPiecesOfPlayer(myOpponent(myPlayer)) == 0) {
-            return 100;
-        }*//*
+        int misFichas = countPiecesOfPlayer(myPlayer, newBoard);
+        int otrasFichas = countPiecesOfPlayer(myOpponent(myPlayer), newBoard);
+        int utility = misFichas - otrasFichas;
         if (newBoard.getCurrentPlayer() == myPlayer) {
-            return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer)) + newBoard.possibleCaptures().size();
+            utility += newBoard.possibleCaptures().size();
         } else {
-            return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer)) - newBoard.possibleCaptures().size();
-        }*/
-        if (newBoard.getCurrentPlayer() == myPlayer) {
-            return countPiecesOfPlayer(myPlayer, newBoard) - countPiecesOfPlayer(myOpponent(myPlayer), newBoard) + newBoard.possibleCaptures().size() * 1;
-        } else {
-            return countPiecesOfPlayer(myPlayer, newBoard) - countPiecesOfPlayer(myOpponent(myPlayer), newBoard) - newBoard.possibleCaptures().size() * 1;
+            utility -= newBoard.possibleCaptures().size();
         }
-        //return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer));
-        //return countPiecesOfPlayer(myPlayer, newBoard) - countPiecesOfPlayer(myOpponent(myPlayer), newBoard);
+        return utility;
     }
 
     private CheckersBoard.Player getInitialPlayer( ) {
@@ -111,14 +102,14 @@ public class ChildBoard {
             for (int j = 0; j < 8; j++) {
                 if ((CheckersBoard.Player.RED.equals(player))) {
                     if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('r'))) {
-                        numPieces += 2;
+                        numPieces += 3;
                         if (i == 0 || i == 7 || j == 0 || j == 7) {
                             numPieces++;
                         }
                     }
                 } else {
                     if ((CheckersBoard.Player.BLACK.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('b'))) {
-                        numPieces += 4;
+                        numPieces += 3;
                         if (i == 0 || i == 7 || j == 0 || j == 7) {
                             numPieces++;
                         }

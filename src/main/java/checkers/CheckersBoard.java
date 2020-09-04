@@ -471,7 +471,7 @@ public class CheckersBoard {
 			} else {
 				numberOfMovesSinceLastCapture = 0;
 			}
-			if (numberOfMovesSinceLastCapture > 1025) {
+			if (numberOfMovesSinceLastCapture > 1000) {
 				System.out.println("DRAW!");
 				return Optional.empty();
 			}

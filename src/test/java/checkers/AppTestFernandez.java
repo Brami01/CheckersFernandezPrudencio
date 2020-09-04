@@ -3,8 +3,8 @@
  */
 package checkers;
 
-import checkers.bot.fenandezprudencioversion3.ChildBoard;
-import checkers.bot.fenandezprudencioversion3.FernandezPrudencioBot3;
+import checkers.bot.fenandezprudencio.ChildBoard;
+import checkers.bot.fenandezprudencio.FernandezPrudencioBot;
 import checkers.exception.BadMoveException;
 import org.junit.Test;
 
