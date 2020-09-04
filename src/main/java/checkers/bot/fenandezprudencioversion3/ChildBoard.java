@@ -34,8 +34,10 @@ public class ChildBoard {
     public void successors(int maxdepth) throws BadMoveException {
         if(this.depth < maxdepth) {
             this.childrenBoards = generatesuccessors(this,maxdepth);
-            for(ChildBoard children: this.childrenBoards){
-                children.successors(maxdepth);
+            if (this.childrenBoards.size() > 0) {
+                for(ChildBoard children: this.childrenBoards){
+                    children.successors(maxdepth);
+                }
             }
         }
     }
@@ -47,8 +49,6 @@ public class ChildBoard {
             ChildBoard possibleStateofBoard = new ChildBoard(board, possiblePlay);
             if(possibleStateofBoard.depth == finalDepth) {
                 possibleStateofBoard.utility = calculateUtility(possibleStateofBoard.board);
-                //possibleStateofBoard.board.printBoard();
-                //System.out.println(possibleStateofBoard.utility + " " + possibleStateofBoard.depth);
             }
             possibleFutureBoards.add(possibleStateofBoard);
         }
@@ -58,7 +58,7 @@ public class ChildBoard {
     private List<CheckersMove> getPossiblePlays(CheckersBoard board) {
         List<CheckersMove> possiblePlays = board.possibleCaptures();
         if (possiblePlays.isEmpty())
-            possiblePlays = board.possibleMoves();
+            return board.possibleMoves();
         return possiblePlays;
     }
 
@@ -70,7 +70,24 @@ public class ChildBoard {
 
     private int calculateUtility(CheckersBoard newBoard) {
         CheckersBoard.Player myPlayer = getInitialPlayer();
-        return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer));
+        /*if (newBoard.countPiecesOfPlayer(myPlayer) == 0) {
+            return -100;
+        }
+        if (newBoard.countPiecesOfPlayer(myOpponent(myPlayer)) == 0) {
+            return 100;
+        }*//*
+        if (newBoard.getCurrentPlayer() == myPlayer) {
+            return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer)) + newBoard.possibleCaptures().size();
+        } else {
+            return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer)) - newBoard.possibleCaptures().size();
+        }*/
+        if (newBoard.getCurrentPlayer() == myPlayer) {
+            return countPiecesOfPlayer(myPlayer, newBoard) - countPiecesOfPlayer(myOpponent(myPlayer), newBoard) + newBoard.possibleCaptures().size() * 1;
+        } else {
+            return countPiecesOfPlayer(myPlayer, newBoard) - countPiecesOfPlayer(myOpponent(myPlayer), newBoard) - newBoard.possibleCaptures().size() * 1;
+        }
+        //return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer));
+        //return countPiecesOfPlayer(myPlayer, newBoard) - countPiecesOfPlayer(myOpponent(myPlayer), newBoard);
     }
 
     private CheckersBoard.Player getInitialPlayer( ) {
@@ -87,30 +104,28 @@ public class ChildBoard {
         }
         return parent.getMoveDone();
     }
-}
 
-/*
-public int countPiecesOfPlayer(CheckersBoard.Player player, CheckersBoard board) {
+    public int countPiecesOfPlayer(CheckersBoard.Player player, CheckersBoard board) {
         int numPieces = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((CheckersBoard.Player.RED.equals(player))) {
-                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'r')) {
+                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('r'))) {
                         numPieces += 2;
-                    }
-                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'R')) {
-                        numPieces += 3;
+                        if (i == 0 || i == 7 || j == 0 || j == 7) {
+                            numPieces++;
+                        }
                     }
                 } else {
-                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'b')) {
-                        numPieces += 2;
-                    }
-                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'B')) {
-                        numPieces += 3;
+                    if ((CheckersBoard.Player.BLACK.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('b'))) {
+                        numPieces += 4;
+                        if (i == 0 || i == 7 || j == 0 || j == 7) {
+                            numPieces++;
+                        }
                     }
                 }
             }
         }
         return numPieces;
     }
- */
+}

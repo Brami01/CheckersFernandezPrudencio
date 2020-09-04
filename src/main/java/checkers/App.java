@@ -5,7 +5,6 @@ package checkers;
 
 import checkers.bot.fenandezprudencioversion2.FernandezPrudencioBot2;
 import checkers.bot.fenandezprudencioversion3.FernandezPrudencioBot3;
-import checkers.bot.fernandezprudencio.FernandezPrudencioBot;
 import checkers.bot.gray.GrayRandomBot;
 
 import java.util.Optional;
@@ -16,10 +15,9 @@ public class App {
         CheckersBoard game = CheckersBoard.initBoard();
         CheckersPlayer player1 = new KeyboardPlayer();
         CheckersPlayer grayRandomBot = new GrayRandomBot();
-        CheckersPlayer fernandezPrudencioBot = new FernandezPrudencioBot();
         CheckersPlayer fernandezPrudencioBot2 = new FernandezPrudencioBot2();
         CheckersPlayer fernandezPrudencioBot3 = new FernandezPrudencioBot3();
-        Optional<CheckersPlayer> loser = game.play(fernandezPrudencioBot3, grayRandomBot);
+        Optional<CheckersPlayer> loser = game.play(grayRandomBot, fernandezPrudencioBot3);
         loser.ifPresent(//
                 checkersPlayer -> System.out.println("LOSER! " + checkersPlayer.getClass().getName()));
     }

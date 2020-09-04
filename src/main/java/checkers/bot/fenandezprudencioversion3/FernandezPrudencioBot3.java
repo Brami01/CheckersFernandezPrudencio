@@ -5,73 +5,69 @@ import checkers.CheckersMove;
 import checkers.CheckersPlayer;
 import checkers.exception.BadMoveException;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FernandezPrudencioBot3 implements CheckersPlayer {
-    private static final int EXPLORATIONDEPTH = 5;
+    private static final int EXPLORATIONDEPTH = 6;
     private int roundsDoingNothingElseThanRunning = 0;
 
     @Override
     public CheckersMove play(CheckersBoard board) {
         CheckersBoard.Player myPlayer = board.getCurrentPlayer();
-        if(board.possibleCaptures().isEmpty()) {roundsDoingNothingElseThanRunning ++;}
-        else {roundsDoingNothingElseThanRunning=0;}
+        if(board.possibleCaptures().isEmpty()) {
+            roundsDoingNothingElseThanRunning++;
+        } else {
+            roundsDoingNothingElseThanRunning = 0;
+        }
         try {
-            /*if(roundsDoingNothingElseThanRunning > 3) { //Possible Draw Loop :(
-                if(iCanCoronate(board)) { //Force Coronations to get Better Chances
-                    return thenCoronate(board);
-                } else {
-                    return returnNormalBestMove(board, myPlayer);
-                }
-            } else {
-                return returnNormalBestMove(board, myPlayer);
-            }*/
-            return findBestMove(board, myPlayer);
+            return findBestMove(board, myPlayer, EXPLORATIONDEPTH);
         } catch (BadMoveException e) {
             e.printStackTrace();
         }
         throw new IllegalArgumentException("Something went wrong");
     }
 
-    public CheckersMove findBestMove (CheckersBoard board, CheckersBoard.Player myPlayer) throws BadMoveException {
-        ChildBoard rootBoard = possibleBoards(board);
+    public CheckersMove findBestMove (CheckersBoard board, CheckersBoard.Player myPlayer, int exploration) throws BadMoveException {
+        ChildBoard rootBoard = possibleBoards(board, exploration);
         return getMiniMaxUtilityOf(rootBoard, myPlayer);
-        //rootBoard.utility = getMiniMaxUtilityOf(rootBoard);
     }
 
     public CheckersMove getMiniMaxUtilityOf(ChildBoard rootBoard, CheckersBoard.Player myPlayer) {
         List <ChildBoard> allBoardsToCheck = addAllBoards(rootBoard);
-        int previousDepth = greathrDepth(allBoardsToCheck) - 1;
+        int previousDepth = greaterDepth(allBoardsToCheck) - 1;
         if(!rootBoard.childrenBoards.isEmpty()) {
             while (previousDepth >= 0) {
                 List <ChildBoard> previousDepthChildren = new LinkedList<>();
                 int finalPreviousDepth = previousDepth;
                 previousDepthChildren.addAll(allBoardsToCheck.stream().filter(n -> n.depth== finalPreviousDepth).collect(Collectors.toList()));
-                for(ChildBoard parent: previousDepthChildren) {
-                    for(ChildBoard children: parent.childrenBoards) {
-                        if (parent.utility == 0) {
-                            parent.utility = children.utility;
-                        } else {
-                            if (parent.board.getCurrentPlayer() == myPlayer) {
-                                if (children.utility > parent.utility) {
-                                    parent.utility = children.utility;
-                                }
-                            } else {
-                                if (children.utility < parent.utility) {
-                                    parent.utility = children.utility;
-                                }
-                            }
-                        }
-                    }
-                }
+                addUtility(myPlayer, previousDepthChildren);
                 previousDepth--;
             }
             return getBestMove(rootBoard);
         }
         return null;
+    }
+
+    private void addUtility(CheckersBoard.Player myPlayer, List<ChildBoard> previousDepthChildren) {
+        for(ChildBoard parent: previousDepthChildren) {
+            for(ChildBoard children: parent.childrenBoards) {
+                if (parent.utility == 0) {
+                    parent.utility = children.utility;
+                } else {
+                    if (parent.board.getCurrentPlayer() == myPlayer) {
+                        if (children.utility > parent.utility) {
+                            parent.utility = children.utility;
+                        }
+                    } else {
+                        if (children.utility < parent.utility) {
+                            parent.utility = children.utility;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private CheckersMove getBestMove(ChildBoard rootBoard) {
@@ -97,7 +93,7 @@ public class FernandezPrudencioBot3 implements CheckersPlayer {
         return allBoardsToCheck;
     }
 
-    private int greathrDepth(List<ChildBoard> allBoards) {
+    private int greaterDepth(List<ChildBoard> allBoards) {
         int maxDepth = 0;
         for (ChildBoard childBoard: allBoards){
             if (childBoard.depth > maxDepth) {
@@ -114,15 +110,13 @@ public class FernandezPrudencioBot3 implements CheckersPlayer {
         return !rootBoard.childrenBoards.isEmpty();
     }
 
-
-    public ChildBoard possibleBoards(CheckersBoard board) throws BadMoveException {
+    public ChildBoard possibleBoards(CheckersBoard board, int exploration) throws BadMoveException {
         ChildBoard rootBoard = new ChildBoard(board);
-        rootBoard.successors(EXPLORATIONDEPTH);
+        rootBoard.successors(exploration);
         return rootBoard;
     }
 
 /*
-
     private ChildBoard findParent(ChildBoard rootBoard, ChildBoard childWhoIsParentOfSuccessors) {
         for(ChildBoard board : rootBoard.childrenBoards) {
             if(board.childrenBoards == null && board.board == childWhoIsParentOfSuccessors.board) {
@@ -235,5 +229,16 @@ public class FernandezPrudencioBot3 implements CheckersPlayer {
         return i > 0 && j > 0 && board.getBoard()[i - 1][j - 1] == CheckersBoard.EMPTY
                 // we exclude the non-crowned piece that cannot move in this direction
                 && board.getBoard()[i][j] != CheckersBoard.RED_PLAIN;
-    }*/
+    }
+
+
+    if(roundsDoingNothingElseThanRunning > 3) { //Possible Draw Loop :(
+                if(iCanCoronate(board)) { //Force Coronations to get Better Chances
+                    return thenCoronate(board);
+                } else {
+                    return returnNormalBestMove(board, myPlayer);
+                }
+            } else {
+                return returnNormalBestMove(board, myPlayer);
+            }*/
 }
