@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.Assert.*;
 
 public class AppTestFernandez {
-
+/*
     @Test
     public void succesorsTest() throws BadMoveException {
         FernandezPrudencioBot3 player3 = new FernandezPrudencioBot3();
@@ -32,7 +32,7 @@ public class AppTestFernandez {
         System.out.println("uh oh");
         rootBoard.utility = player3.getMiniMaxUtilityOf(rootBoard);
         System.out.println(rootBoard.utility);
-    }
+    }*/
 
 
 

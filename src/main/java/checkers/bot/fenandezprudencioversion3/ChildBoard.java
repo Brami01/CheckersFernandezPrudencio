@@ -28,8 +28,7 @@ public class ChildBoard {
         this.depth = parent.depth + 1;
         this.move = move;
         this.parent = parent;
-        //this.parent.childrenBoards.add()
-        this.board = createBoardWithAssignedMove(parent.board,move);
+        this.board = createBoardWithAssignedMove(parent.board, move);
     }
 
     public void successors(int maxdepth) throws BadMoveException {
@@ -47,10 +46,9 @@ public class ChildBoard {
         for (CheckersMove possiblePlay: possiblePlays) {
             ChildBoard possibleStateofBoard = new ChildBoard(board, possiblePlay);
             if(possibleStateofBoard.depth == finalDepth) {
-                possibleStateofBoard.utility=calculateUtility(possibleStateofBoard.board);
-                possibleStateofBoard.board.printBoard();
-                System.out.println(possibleStateofBoard.utility);
-                System.out.println(possibleStateofBoard.depth);
+                possibleStateofBoard.utility = calculateUtility(possibleStateofBoard.board);
+                //possibleStateofBoard.board.printBoard();
+                //System.out.println(possibleStateofBoard.utility + " " + possibleStateofBoard.depth);
             }
             possibleFutureBoards.add(possibleStateofBoard);
         }
@@ -72,12 +70,11 @@ public class ChildBoard {
 
     private int calculateUtility(CheckersBoard newBoard) {
         CheckersBoard.Player myPlayer = getInitialPlayer();
-        utility = newBoard.countPiecesOfPlayer(myPlayer)-newBoard.countPiecesOfPlayer(myOpponent(myPlayer));
-        return utility;
+        return newBoard.countPiecesOfPlayer(myPlayer) - newBoard.countPiecesOfPlayer(myOpponent(myPlayer));
     }
 
     private CheckersBoard.Player getInitialPlayer( ) {
-        return parent ==null ? board.getCurrentPlayer() : parent.getInitialPlayer();
+        return parent == null ? board.getCurrentPlayer() : parent.getInitialPlayer();
     }
 
     private CheckersBoard.Player myOpponent(CheckersBoard.Player myPlayer) {
@@ -91,3 +88,29 @@ public class ChildBoard {
         return parent.getMoveDone();
     }
 }
+
+/*
+public int countPiecesOfPlayer(CheckersBoard.Player player, CheckersBoard board) {
+        int numPieces = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if ((CheckersBoard.Player.RED.equals(player))) {
+                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'r')) {
+                        numPieces += 2;
+                    }
+                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'R')) {
+                        numPieces += 3;
+                    }
+                } else {
+                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'b')) {
+                        numPieces += 2;
+                    }
+                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == 'B')) {
+                        numPieces += 3;
+                    }
+                }
+            }
+        }
+        return numPieces;
+    }
+ */
