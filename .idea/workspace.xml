@@ -24,9 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0c580b58-956c-4074-b63a-6255f7eb168e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudencioversion3/ChildBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudencioversion3/ChildBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudencioversion3/FernandezPrudencioBot3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudencioversion3/FernandezPrudencioBot3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/checkers/AppTestFernandez.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/checkers/AppTestFernandez.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudencio/ChildBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/checkers/bot/fenandezprudencio/ChildBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/checkers/AppTestFernandez.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +88,17 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -166,6 +176,8 @@
       <workItem from="1599169778676" duration="1786000" />
       <workItem from="1599171588720" duration="1786000" />
       <workItem from="1599173401756" duration="937000" />
+      <workItem from="1599244463758" duration="526000" />
+      <workItem from="1599245079437" duration="748000" />
     </task>
     <servers />
   </component>

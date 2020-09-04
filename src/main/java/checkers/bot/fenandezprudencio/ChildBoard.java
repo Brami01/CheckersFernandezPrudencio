@@ -70,9 +70,9 @@ public class ChildBoard {
 
     private int calculateUtility(CheckersBoard newBoard) {
         CheckersBoard.Player myPlayer = getInitialPlayer();
-        int misFichas = countPiecesOfPlayer(myPlayer, newBoard);
-        int otrasFichas = countPiecesOfPlayer(myOpponent(myPlayer), newBoard);
-        int utility = misFichas - otrasFichas;
+        int myPieces = countPiecesOfPlayer(myPlayer, newBoard);
+        int enemyPieces = countPiecesOfPlayer(myOpponent(myPlayer), newBoard);
+        int utility = myPieces - enemyPieces;
         if (newBoard.getCurrentPlayer() == myPlayer) {
             utility += newBoard.possibleCaptures().size();
         } else {
@@ -101,16 +101,16 @@ public class ChildBoard {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((CheckersBoard.Player.RED.equals(player))) {
-                    if ((CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('r'))) {
-                        numPieces += 3;
-                        if (i == 0 || i == 7 || j == 0 || j == 7) {
+                    if (IamRedAndItsMyPiece(player, board, i, j)) {
+                        numPieces += 3; //add value for each own piece of the player
+                        if (isThePieceOnEdge(i, j)) { // I'f i'm in edge add value
                             numPieces++;
                         }
                     }
                 } else {
-                    if ((CheckersBoard.Player.BLACK.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('b'))) {
-                        numPieces += 3;
-                        if (i == 0 || i == 7 || j == 0 || j == 7) {
+                    if (IamBlackAndItsMyPiece(player, board, i, j)) {
+                        numPieces += 3; //add value for each own piece of the player
+                        if (isThePieceOnEdge(i, j)) { // I'f i'm in edge add value
                             numPieces++;
                         }
                     }
@@ -118,5 +118,17 @@ public class ChildBoard {
             }
         }
         return numPieces;
+    }
+
+    private boolean isThePieceOnEdge(int i, int j) {
+        return i == 0 || i == 7 || j == 0 || j == 7;
+    }
+
+    private boolean IamBlackAndItsMyPiece(CheckersBoard.Player player, CheckersBoard board, int i, int j) {
+        return CheckersBoard.Player.BLACK.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('b');
+    }
+
+    private boolean IamRedAndItsMyPiece(CheckersBoard.Player player, CheckersBoard board, int i, int j) {
+        return CheckersBoard.Player.RED.equals(player) && board.getBoard()[i][j] == Character.toLowerCase('r');
     }
 }
